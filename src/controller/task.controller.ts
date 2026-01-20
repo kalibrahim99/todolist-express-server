@@ -25,5 +25,5 @@ export const deleteTask = (req : Request,res : Response) => {
     if(Number.isNaN(Number(id)) === true || Number(id) === 0) return res.status(400).json("try a true value")
     const tasksprocessResult : string = processDeleterequest(tasks,id);
 
-    res.status(204).json(tasksprocessResult)
+    res.status(200).json(tasksprocessResult)
 }
