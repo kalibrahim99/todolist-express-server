@@ -8,10 +8,8 @@ let tasks : Task[] = []
 export const addTask = (req : Request, res : Response) => {
     const {name, id} = req.body
 
-    const newTask : Task | string = processTaskRequest(name,id);
-    if(typeof newTask === "object") tasks.push(newTask)
-    else return res.status(400).json(newTask)
-    
+    const newTask : Task = processTaskRequest(name,id);
+    tasks.push(newTask)
     res.status(201).json(tasks)
 }
 
@@ -21,9 +19,7 @@ export const getTask = (req : Request,res : Response) => {
 
 export const deleteTask = (req : Request,res : Response) => {
     const {id} = req.body
-
-    if(Number.isNaN(Number(id)) === true || Number(id) === 0) return res.status(400).json("try a true value")
-    const tasksprocessResult : string = processDeleterequest(tasks,id);
-
-    res.status(204).json(tasksprocessResult)
+    let result = processDeleterequest(tasks,id);
+    if(typeof result !== "object") return res.status(404).json(result)
+    res.status(204).json(result)
 }
