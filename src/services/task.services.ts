@@ -1,33 +1,30 @@
 
-import Task from '../interfaces'
+import {ITask} from '../interfaces'
+import Task, { TaskDocument } from '../models/task.model';
 
-export const processTaskRequest = (name : string, id : number) : Task=> {
-
-
-    
-    const result : Task = {
+export const processTaskRequest = (name : string) : ITask=> {
+    const result : ITask = {
         taskName : name,
-        ID : id,
         date : new Date()
     }
     return result;
 }
 
-export const processDeleterequest = (tasks : Task[], id : number) : string => {
-   
-    const taskIndex = tasks.findIndex(task => task.ID === id)
-
-    if (taskIndex === -1)  throw new Error("we didnt found task")
-    tasks.splice(taskIndex,1)
+export const processDeleterequest = async (name : string) : Promise<string> => {
+    const deleteTask = await Task.deleteOne({taskName : name});
+    if (!deleteTask) throw new Error("the task delete not completed")
     return "delete task complete"
 }
 
-export const updateTaskProcess = (tasks : Task[],id : number, newId : number, newName : string) : Task => {
+export const updateTaskProcess = async (name : string, newName : string)  => {
 
-    const index = tasks.findIndex(x => x.ID === id)
-    if (index === -1)  throw new Error("we didnt fount task by id" + id)
-    
-    tasks[index] = {taskName : newName, ID : newId, date : tasks[index].date};
-    return tasks[index]
+   const taskInfo : TaskDocument | null = await Task.findOneAndUpdate(
+    {taskName : name},
+    {taskName: newName},
+    {new : true}
+
+);
+    if (!taskInfo)  throw new Error("we didnt fount task by name " + name)
+    return taskInfo
 
 }

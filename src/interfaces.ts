@@ -1,8 +1,6 @@
-interface Task{
+export interface ITask{
     taskName : string,
-    ID : number,
     date : Date
 }
 
 
-export default Task

@@ -1,16 +1,15 @@
 import mongoose, {Document, Schema} from "mongoose";
-import Task from "../interfaces";
-export interface TaskDocument extends Task, Document{}
-const shema = new Schema<Task>({
+import {ITask} from "../interfaces";
+
+export interface TaskDocument extends ITask, Document{}
+
+const shema = new Schema<ITask>({
     taskName : {
         type : String,
-        required : true
-    },
-    ID : {
-        type : Number,
         required : true,
         unique : true
     },
+
     date : {
         type : Date,
         required : false

@@ -7,7 +7,6 @@ export const validateTaskRequest = (req : Request,res : Response,next : NextFunc
 
     const shema = z.object({
         name : z.string().min(1),
-        id : z.coerce.number()
     })
 
     const data = shema.safeParse(req.body);
@@ -21,7 +20,7 @@ export const validateTaskRequest = (req : Request,res : Response,next : NextFunc
 export const validateParamsRequest = (req : Request,res : Response, next : NextFunction) => {
     
     const shema = z.object({
-        id : z.coerce.number(),
+      name : z.string().min(1)
     })
 
     const id = shema.safeParse(req.params);
@@ -34,15 +33,14 @@ export const validateParamsRequest = (req : Request,res : Response, next : NextF
 export const validateUpdateRequest = (req : Request,res : Response,next : NextFunction) => {
 
     const shema = z.object({
-        id : z.coerce.number(),
         newName : z.string().min(1),
-        newId : z.coerce.number()
     })
 
     const data = shema.safeParse(req.body);
 
     if(!data.success) return res.status(400).json(data.error.message)
     req.body = data.data
+    
 
     next()
 }
