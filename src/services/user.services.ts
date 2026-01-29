@@ -16,10 +16,7 @@ export const addUser = (name : string,nickname : string,password : string, email
 export const checkUser = async (email : string, password : string)  => {
     const user  = await User.findOne({email : email})
     if (!user) throw new Error("INVALID_EMAIL")
-
-    const originalPasshashed = await bcrypt.hash(user.password,10)
-    const enterdPassword = await bcrypt.hash(password,10)
-    const checkPass =  await bcrypt.compare(enterdPassword,originalPasshashed) 
+    const checkPass =  await bcrypt.compare(password,user.password) 
     if (checkPass === false) throw new Error("INVALID_PASSWORD")
     return {message : "the login is succefully", userInfo : user}
     
