@@ -9,7 +9,9 @@ const shema = new Schema<ITask>({
         required : true,
         unique : true
     },
-
+    userId : {
+        required : true
+    },
     date : {
         type : Date,
         required : false

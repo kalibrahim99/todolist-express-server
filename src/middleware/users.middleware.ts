@@ -30,7 +30,8 @@ export const validateLoginInput = (req : Request,res : Response,next : NextFunct
         .regex(/[^A-Za-z0-9]/, "Must contain special character")
     })
     const data = schema.safeParse(req.body)
-    req.body = data.data
+    
     if (!data.success) return res.status(400).json(data.error.message)
+    req.body = data.data
     next()
 }
