@@ -1,7 +1,7 @@
 import {Router} from 'express'
 import { addTask, getTask, deleteTask,updateTask} from '../../controller/task.controller';
 import { validateParamsRequest, validateTaskRequest, validateUpdateRequest } from '../../middleware/tasks.middleware';
-import { authUser } from '../../middleware/auth.meddleware';
+import { authUser } from '../../middleware/auth.middleware';
 
 const taskRouter = Router()
 
