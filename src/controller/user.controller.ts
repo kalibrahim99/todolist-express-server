@@ -8,7 +8,7 @@ export const login = async (req : Request, res : Response) => {
         const {email, password} = req.body
         const resultOfCheck = await checkUser(email,password);
         const token = makeUserToken(resultOfCheck.userInfo)
-        res.status(200).json({message : resultOfCheck.message, token : token})
+        res.status(200).json({message : resultOfCheck.message, token : token,name : resultOfCheck.userInfo.name})
     } 
     catch (error : any){
         if (error.message === "INVALID_EMAIL") {
